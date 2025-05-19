@@ -18,11 +18,11 @@ class PDFPreprocessor:
         """
         Extracts text content from the PDF file.
         """
-        doc = fitz.open(self.pdf_path)
-        text = ""
-        for page_num in range(doc.page_count):
-            page = doc.load_page(page_num)
-            text += page.get_text()
+        with fitz.open(self.pdf_path) as doc:
+            text = ""
+            for page_num in range(doc.page_count):
+                page = doc.load_page(page_num)
+                text += page.get_text()
         self.text_content = text
 
     def chunk_text(self, max_tokens: int = 1500) -> None:
